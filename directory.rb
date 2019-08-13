@@ -1,28 +1,10 @@
-
-# let's put all students into an array
-# not needed anymore
-students = [
-  {name: "Dr. Hannibal Lecter", cohort: :november}, 
-  {name: "Darth Vader", cohort: :november}, 
-  {name: "Nurse Ratched", cohort: :november}, 
-  {name: "Michael Corleone", cohort: :november},
-  {name: "Alex DeLarge", cohort: :november},
-  {name: "The Wicked Witch of the West", cohort: :november},
-  {name: "Terminator", cohort: :november}, 
-  {name: "Freddy Krueger", cohort: :november},
-  {name: "The Joker", cohort: :november}, 
-  {name: "Joffrey Baratheon", cohort: :november},
-  {name: "Norman Bates", cohort: :november} 
-] 
-
-# really starts here
-
 @students = []
 
 def print_menu 
   puts "1. Input the students" 
   puts "2. Show the students" 
-  puts "9. Exit" # 9 because we'll be adding more items
+  puts "3. Save list to file"  
+  puts "9. Exit"
 end
 
 def show_students 
@@ -45,6 +27,8 @@ def process(selection)
       input_students 
     when "2" 
       show_students
+    when "3"
+      save_students
     when "9" 
       exit 
     else puts "I don't know what you mean, try again" 
@@ -83,9 +67,16 @@ def print_footer
   puts "Overall, we have #{@students.count} great students" 
 end
 
-#nothing happens until we call the methods
-# students = input_students
-# print_header 
-# print(students)
-# print_footer(students)
+def save_students
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  # iterate over the array of students
+  @students.each do |student| 
+    student_data = [student[:name], student[:cohort]] 
+    file.puts student_data.join(",") 
+  end 
+  file.close 
+end
+	
+# run the program
 interactive_menu
